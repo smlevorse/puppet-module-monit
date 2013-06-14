@@ -37,9 +37,8 @@ class monit (
   $interval   = 60,
   $delay      = $interval * 2,
   $logfile    = $monit::params::logfile,
-  $mailserver = 'localhost', 
+  $mailserver = 'localhost'
 ) inherits monit::params {
-
   $conf_include = "${monit::params::conf_dir}/*"
 
   if ($ensure == 'present') {
@@ -50,11 +49,13 @@ class monit (
     $service_state = 'stopped'
   }
 
-  anchor {'monit::begin' :
+  anchor { 'monit::begin':
     before => Class['monit::package']
   }
 
-  class {'monit::package': ensure => $ensure}
+  class { 'monit::package':
+    ensure => $ensure
+  }
 
   # Template uses: $admin, $conf_include, $interval, $logfile
   file { $monit::params::conf_file:
@@ -74,16 +75,17 @@ class monit (
 
   # Not all platforms need this
   if ($monit::params::default_conf) {
-   if ($monit::params::default_conf_tpl) {
-    file { $monit::params::default_conf:
-      ensure  => $ensure,
-      content => template("monit/$monit::params::default_conf_tpl"),
-      require => Class['monit::package'],
-      before  => Class['monit::service']
-    }
+    if ($monit::params::default_conf_tpl) {
+      file { $monit::params::default_conf:
+        ensure  => $ensure,
+        content => template("monit/${monit::params::default_conf_tpl}"),
+        require => Class['monit::package'],
+        before  => Class['monit::service']
+      }
 
-   }
-   else { fail("You need to provide config template")}
+    } else {
+      fail("You need to provide config template")
+    }
 
   }
 
@@ -96,20 +98,20 @@ class monit (
 
   if $::osfamily == 'redhat' {
     file { '/var/lib/monit':
-	    ensure  => directory,
-	    owner   => 'root',
-	    group   => 'root',
-	    mode    => '0755',
-	    before  => Class['monit::service']
-	  }
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+      before => Class['monit::service']
+    }
   }
 
-  class {'monit::service':
+  class { 'monit::service':
     run_service   => $run_service,
     service_state => $service_state
   }
 
-  anchor {'monit::end' :
+  anchor { 'monit::end':
     require => Class['monit::service']
   }
 }
