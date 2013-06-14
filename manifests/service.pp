@@ -5,8 +5,8 @@
 #
 # === Parameters
 #
-# [*run_service*]   - If the package should be installed or not.
-# [*service_state*] - If the package should be installed or not.
+# [*run_service*]   - Enable or disable service.
+# [*service_state*] - State of running service.
 #
 # === Examples
 #
