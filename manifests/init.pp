@@ -70,6 +70,7 @@ class monit (
       ensure  => $ensure,
       content => template("monit/$monit::params::default_conf_tpl"),
       require => Class['monit::package'],
+      before  => Class['monit::service']
     }
 
    }
