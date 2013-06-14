@@ -32,7 +32,5 @@ class monit::service ($run_service, $service_state) inherits monit::params {
     enable     => $run_service,
     hasrestart => true,
     hasstatus  => true,
-    subscribe  => File[$monit::params::conf_file],
-    require    => File[$monit::params::logrotate_script]
   }
 }
