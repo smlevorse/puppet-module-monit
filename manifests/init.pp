@@ -1,6 +1,6 @@
 # == Class: monit
 #
-# This module controls Monit
+# This module controls Monit.
 #
 # === Parameters
 #
@@ -10,12 +10,17 @@
 # [*delay*]     - How long to wait before actually performing any action
 # [*logfile*]   - What file for monit use for logging
 # [*mailserver] - Which mailserver to use
+#
 # === Examples
 #
 #  class { 'monit':
 #    admin    => 'me@mydomain.local',
 #    interval => 30,
 #  }
+#
+# === Requires
+#
+# puppetlabs-stdlib
 #
 # === Authors
 #
@@ -43,6 +48,10 @@ class monit (
   } else {
     $run_service = false
     $service_state = 'stopped'
+  }
+
+  anchor {'monit::begin' :
+    before => Class['monit::package']
   }
 
   class {'monit::package': ensure => $ensure}
@@ -98,5 +107,9 @@ class monit (
   class {'monit::service':
     run_service   => $run_service,
     service_state => $service_state
+  }
+
+  anchor {'monit::end' :
+    require => Class['monit::service']
   }
 }
