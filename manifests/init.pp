@@ -53,7 +53,7 @@ class monit (
     content => template('monit/monitrc.erb'),
     mode    => '0600',
     require => Class['monit::package'],
-    notify  => Service[$monit::params::monit_service],
+    notify  => Class['monit::service']
   }
 
   file { $monit::params::conf_dir:
@@ -90,19 +90,12 @@ class monit (
 	    owner   => 'root',
 	    group   => 'root',
 	    mode    => '0755',
-	    before  => Service[$monit::params::monit_service]
+	    before  => Class['monit::service']
 	  }
   }
 
-  service { $monit::params::monit_service:
-    ensure     => $service_state,
-    enable     => $run_service,
-    hasrestart => true,
-    hasstatus  => true,
-    subscribe  => File[$monit::params::conf_file],
-    require    => [
-      File[$monit::params::conf_file],
-      File[$monit::params::logrotate_script]
-    ],
+  class {'monit::service':
+    run_service   => $run_service,
+    service_state => $service_state
   }
 }
