@@ -45,7 +45,7 @@ define monit::monitor (
   file { "${monit::params::conf_dir}/$name.conf":
     ensure  => $ensure,
     content => template('monit/process.conf.erb'),
-    notify  => Service[$monit::params::monit_service],
-    require => Package[$monit::params::monit_package],
+    notify  => Class['monit::service'],
+    require => Class['monit::package'],
   }
 }
