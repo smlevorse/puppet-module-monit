@@ -45,16 +45,14 @@ class monit (
     $service_state = 'stopped'
   }
 
-  package { $monit::params::monit_package:
-    ensure => $ensure,
-  }
+  class {'monit::package': ensure => $ensure}
 
   # Template uses: $admin, $conf_include, $interval, $logfile
   file { $monit::params::conf_file:
     ensure  => $ensure,
     content => template('monit/monitrc.erb'),
     mode    => '0600',
-    require => Package[$monit::params::monit_package],
+    require => Class['monit::package'],
     notify  => Service[$monit::params::monit_service],
   }
 
@@ -71,7 +69,7 @@ class monit (
     file { $monit::params::default_conf:
       ensure  => $ensure,
       content => template("monit/$monit::params::default_conf_tpl"),
-      require => Package[$monit::params::monit_package],
+      require => Class['monit::package'],
     }
 
    }
@@ -83,7 +81,7 @@ class monit (
   file { $monit::params::logrotate_script:
     ensure  => $ensure,
     content => template("monit/${monit::params::logrotate_source}"),
-    require => Package[$monit::params::monit_package],
+    require => Class['monit::package'],
   }
 
   if $::osfamily == 'redhat' {
