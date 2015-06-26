@@ -33,6 +33,7 @@ class monit (
   $delay      = $interval * 2,
   $logfile    = $monit::params::logfile,
   $mailserver = 'localhost', 
+  $httpd_port = 2812,
 ) inherits monit::params {
 
   $conf_include = "${monit::params::conf_dir}/*"
@@ -49,7 +50,7 @@ class monit (
     ensure => $ensure,
   }
 
-  # Template uses: $admin, $conf_include, $interval, $logfile
+  # Template uses: $admin, $conf_include, $interval, $logfile, $httpd_port
   file { $monit::params::conf_file:
     ensure  => $ensure,
     content => template('monit/monitrc.erb'),
