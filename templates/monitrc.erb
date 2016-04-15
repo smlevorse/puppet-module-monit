@@ -16,8 +16,8 @@
 ##
 ## Start Monit in the background (run as a daemon):
 #
-set daemon  <%= interval %> # check services at N-second intervals
-   with start delay <%= delay  %> # delay the first check N*2
+set daemon  <%= @interval %> # check services at N-second intervals
+   with start delay <%= @delay  %> # delay the first check N*2
 #
 #
 ## Set syslog logging with the 'daemon' facility. If the FACILITY option is
@@ -52,7 +52,7 @@ set logfile <%= @logfile %>
 #                backup.bar.baz port 10025,  # backup mailserver on port 10025
 #                localhost                   # fallback relay
 #
-set mailserver <%= mailserver %>
+set mailserver <%= @mailserver %>
 
 ## By default Monit will drop alert events if no mail servers are available. 
 ## If you want to keep the alerts for later delivery retry, you can use the 
@@ -111,7 +111,7 @@ set alert <%= @admin %>                       # receive all alerts
 ## services monitored and manage services from a web interface. See the
 ## Monit Wiki if you want to enable SSL for the web server. 
 #
-set httpd port <%= httpd_port %> and
+set httpd port <%= @httpd_port %> and
     use address localhost  # only accept connection from localhost
     allow localhost        # allow localhost to connect to the server and
 #     allow admin:monit      # require user 'admin' with password 'monit'
