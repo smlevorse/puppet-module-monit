@@ -112,8 +112,12 @@ set alert <%= @admin %>                       # receive all alerts
 ## Monit Wiki if you want to enable SSL for the web server. 
 #
 set httpd port <%= @httpd_port %> and
+<% if @allow_remote -%>
+    allow <%= @monit_user %>:<%= @monit_password %>
+<% else -%>
     use address localhost  # only accept connection from localhost
     allow localhost        # allow localhost to connect to the server and
+<% end -%>
 #     allow admin:monit      # require user 'admin' with password 'monit'
 #     allow @monit           # allow users of group 'monit' to connect (rw)
 #     allow @users readonly  # allow users of group 'users' to connect readonly
