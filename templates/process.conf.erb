@@ -1,4 +1,10 @@
 check process <%= @name %> with pidfile <%= @pidfile %>
+<% if @alert_email -%>
+  alert <%= @alert_email %> <%= @alert_events %> <% if @email_format -%> mail-format {
+<%= @email_format %>
+}
+<% end -%>
+<% end -%>
   start program = "<%= @start_script %>"
 <% if @start_timeout -%>
     with timeout <%= @start_timeout %> seconds

@@ -38,6 +38,9 @@ define monit::monitor (
   $start_timeout = undef,
   $stop_timeout  = undef,
   $group         = $name,
+  $alert_email   = undef,
+  $alert_events  = '',
+  $email_format  = undef,
 ) {
   include monit::params
 
