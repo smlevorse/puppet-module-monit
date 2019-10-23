@@ -11,7 +11,6 @@
 # [*checks*]       - Array of monit check statements
 # [*start_script*] - Scipt used to start the process
 # [*stop_script*]  - Scipt used to start the process
-#
 # === Examples
 #
 #  monit::monitor { 'monit-watch-monit':
@@ -38,6 +37,9 @@ define monit::monitor (
   $start_timeout = undef,
   $stop_timeout  = undef,
   $group         = $name,
+  $alert_email   = undef,
+  $alert_events  = '',
+  $email_format  = undef,
 ) {
   include monit::params
 
