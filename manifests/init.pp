@@ -27,17 +27,26 @@
 # Copyright 2011 Eivind Uggedal <eivind@uggedal.com>
 #
 class monit (
-  $ensure          = present,
-  $admin           = undef,
-  $interval        = 60,
-  $delay           = $interval * 2,
-  $logfile         = $monit::params::logfile,
-  $mailserver      = 'localhost',
-  $httpd_port      = 2812,
-  $allow_remote    = false,
-  $monit_user      = undef,
-  $monit_password  = undef,
-  $package_version = undef,
+  $ensure                  = present,
+  $admin                   = undef,
+  $interval                = 60,
+  $delay                   = $interval * 2,
+  $logfile                 = $monit::params::logfile,
+  $mailserver              = 'localhost',
+  $httpd_port              = 2812,
+  $allow_remote            = false,
+  $monit_user              = undef,
+  $monit_password          = undef,
+  $package_version         = undef,
+  $use_ssl                 = undef,
+  $ssl_or_tls              = undef,
+  $ssl_version             = undef,
+  $ssl_verify              = undef,
+  $ssl_selfsign_allow      = undef,
+  $ssl_ciphers             = undef,
+  $ssl_pemfile             = undef,
+  $ssl_cert_file_path      = undef,
+  $ssl_cert_directory_path = undef,
 ) inherits monit::params {
 
   $conf_include = "${monit::params::conf_dir}/*"

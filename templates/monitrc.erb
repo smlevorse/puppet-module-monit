@@ -111,6 +111,31 @@ set alert <%= @admin %>                       # receive all alerts
 ## services monitored and manage services from a web interface. See the
 ## Monit Wiki if you want to enable SSL for the web server. 
 #
+<% if @use_ssl -%>
+set <% @ssl_or_tls %> options {
+<% if @ssl_version -%>
+    VERSION: <%= @ssl_version %>
+<% end -%>
+<% if @ssl_verify -%>
+    VERIFY: <%= @ssl_verify %>
+<% end -%>
+<% if @ssl_selfsign_allow -%>
+    SELFSIGNED: <%= @ssl_selfsign_allow %>
+<% end -%>
+<% if @ssl_ciphers -%>
+    CIPHERS: <%= @ssl_ciphers %>
+<% end -%>
+<% if @ssl_pemfile_path -%>
+    PEMFILE: <%= @ssl_pemfile_path %>
+<% end -%>
+<% if @ssl_cert_file_path -%>
+    CACERTIFICATEFILE: <%= @ssl_cert_file_path %>
+<% end -%>
+<% if @ssl_cert_directory_path -%>
+    CACERTIFICATEPATH: <%= @ssl_cert_directory_path %>
+<% end -%>
+}
+<% end -%>
 set httpd port <%= @httpd_port %> and
 <% if @allow_remote -%>
     allow <%= @monit_user %>:<%= @monit_password %>
