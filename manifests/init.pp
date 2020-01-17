@@ -10,6 +10,7 @@
 # [*delay*]     - How long to wait before actually performing any action
 # [*logfile*]   - What file for monit use for logging
 # [*mailserver] - Which mailserver to use
+# [*httpd_port] - port for 
 # === Examples
 #
 #  class { 'monit':
@@ -39,11 +40,6 @@ class monit (
   $monit_password          = undef,
   $package_version         = undef,
   $use_ssl                 = undef,
-  $ssl_or_tls              = undef,
-  $ssl_version             = undef,
-  $ssl_verify              = undef,
-  $ssl_selfsign_allow      = undef,
-  $ssl_ciphers             = undef,
   $ssl_pemfile             = undef,
   $ssl_cert_file_path      = undef,
   $ssl_cert_directory_path = undef,

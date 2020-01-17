@@ -112,19 +112,9 @@ set alert <%= @admin %>                       # receive all alerts
 ## Monit Wiki if you want to enable SSL for the web server. 
 #
 <% if @use_ssl -%>
-set <% @ssl_or_tls %> options {
-<% if @ssl_version -%>
-    VERSION: <%= @ssl_version %>
-<% end -%>
-<% if @ssl_verify -%>
-    VERIFY: <%= @ssl_verify %>
-<% end -%>
-<% if @ssl_selfsign_allow -%>
-    SELFSIGNED: <%= @ssl_selfsign_allow %>
-<% end -%>
-<% if @ssl_ciphers -%>
-    CIPHERS: <%= @ssl_ciphers %>
-<% end -%>
+set TLS options {
+    # Self signed certificats are rejected
+    SELFSIGNED: ALLOW
 <% if @ssl_pemfile_path -%>
     PEMFILE: <%= @ssl_pemfile_path %>
 <% end -%>
